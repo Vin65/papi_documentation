@@ -6,6 +6,9 @@ The Vin65 Market Services API uses the following error codes:
 
 Code       | Message               | Description
 ---------- | --------------------- | -----------
-401        | Unauthorized          | Your authentication credentials are incorrect or your authorization token is invalid.
-404        | Not Found             | The specified resource could not be found
-500        | Internal Server Error | We had a problem with our server. Try again later.
+200        | ok                    | The request completed normally
+201        | created               | The resource was created
+204        | no content            | The request did not return any content. Normally used during a successful update
+401        | unauthorized          | Your authentication credentials are incorrect or your authorization token is invalid
+404        | not found             | The specified resource could not be found
+500        | internal server error | We had a problem with our server
