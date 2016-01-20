@@ -4,7 +4,7 @@ title: API Reference
 language_tabs:
   - shell
   - ruby
-  - python
+  - coldfusion
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -17,36 +17,36 @@ search: true
 ---
 
 # Introduction
-test
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Welcome to the Vin65 Market Services API Documentation site. Here you will find information on how to authenticate and interact with this API.
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl --data "email=test@example.com&password=secret" https://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+```ruby
+require 'net/http'
+require 'rubygems'
+require 'json'
+
+uri = URI('http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth')
+req = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json'})
+req.body = {email: 'supplier@example.com', password: '12345678'}.to_json
+http = Net::HTTP.new(uri.host, 80)
+resp = http.request(req)
+if resp.code == '201'
+  token = JSON.parse(resp.body)['token']
+else
+  token = ''
+end
+```
+
+> Remember to replace your email and password.
 
 Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
 
