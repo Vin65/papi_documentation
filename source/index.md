@@ -14,7 +14,7 @@ includes:
   - authentication
   - products
   - orders
-  - errors
+  - response_codes
 
 search: false
 ---
