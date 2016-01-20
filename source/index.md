@@ -4,7 +4,6 @@ title: API Reference
 language_tabs:
   - shell
   - ruby
-  - coldfusion
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -26,7 +25,7 @@ Welcome to the Vin65 Market Services API Documentation site. Here you will find 
 
 
 ```shell
-curl --data "email=test@example.com&password=secret" https://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
+curl --data "email=supplier@example.com&password=12345678" http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
 ```
 
 ```ruby
@@ -47,6 +46,17 @@ end
 ```
 
 > Remember to replace your email and password.
+
+> The above command returns JSON structured like this:
+
+```json
+{
+	"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NTM0MTExNzEsInV1aWQiOiJhODczNTA3Zi0yYThjLTQ2NDAtOThmYy1iZWU2MjVhYzZkZjcifQ.NbqSfsh2GdAr2cSyS0mKw9AE8wKUCgdgfubIbIsWhKNx1qm5uIxUMhfukL5Ha6jc0VuCABzx5L2ZdcYNRgtnhA",
+	"created_at": "2016-01-20T21:19:31.000Z",
+	"expires_at": "2016-01-21T21:19:31.000Z",
+	"status": "Active"
+}
+```
 
 Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
 
