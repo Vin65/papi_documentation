@@ -45,11 +45,16 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="introduction">Introduction</h1>
+        
+          <h1 id="introduction">Introduction</h1>
 
 <p>Welcome to the Vin65 Market Services API Documentation site. Here you will find information on how to authenticate and interact with this API.</p>
 
-<h1 id="authentication">Authentication</h1>
+          <h1 id="authentication">Authentication</h1>
+
+<p>Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.</p>
+
+<p>All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.</p>
 
 <blockquote>
 <p>To Authenticate and retreive a new authorization token, use this code:</p>
@@ -111,17 +116,13 @@
 </tr>
 </tbody></table>
 
-<p>Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.</p>
-
-<p>All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.</p>
-
 <p><code class="prettyprint">Authorization: Beaer [auth_token]</code></p>
 
 <aside class="notice">
 You must replace <code>[auth_token]</code> with your authorization token that you obtain from thr authenticate request.
 </aside>
 
-<h1 id="products">Products</h1>
+          <h1 id="products">Products</h1>
 
 <h2 id="get-a-list-products">Get a list Products</h2>
 <pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
@@ -214,7 +215,7 @@ Remember — all requests must contain an Authorization Token in the headers.
 </aside>
 
 <h2 id="get-a-specific-product">Get a Specific Product</h2>
-<pre class="highlight ruby"><code><span class="n">equire</span> <span class="s1">'net/http'</span>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
