@@ -16,5 +16,5 @@ includes:
   - orders
   - errors
 
-search: true
+search: false
 ---
