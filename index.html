@@ -52,6 +52,38 @@
 
           <h1 id="authentication">Authentication</h1>
 
+<blockquote>
+<p>To Authenticate and retreive a new authorization token, use this code:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl --data <span class="s2">"email=supplier@example.com&amp;password=12345678"</span> http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
+</code></pre>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
+<span class="nb">require</span> <span class="s1">'rubygems'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth'</span><span class="p">)</span>
+<span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">})</span>
+<span class="n">req</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="p">{</span><span class="ss">email: </span><span class="s1">'supplier@example.com'</span><span class="p">,</span> <span class="ss">password: </span><span class="s1">'12345678'</span><span class="p">}.</span><span class="nf">to_json</span>
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">resp</span><span class="p">.</span><span class="nf">code</span> <span class="o">==</span> <span class="s1">'201'</span>
+  <span class="n">token</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="nf">body</span><span class="p">)[</span><span class="s1">'token'</span><span class="p">]</span>
+<span class="k">else</span>
+  <span class="n">token</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="k">end</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NTM0MTExNzEsInV1aWQiOiJhODczNTA3Zi0yYThjLTQ2NDAtOThmYy1iZWU2MjVhYzZkZjcifQ.NbqSfsh2GdAr2cSyS0mKw9AE8wKUCgdgfubIbIsWhKNx1qm5uIxUMhfukL5Ha6jc0VuCABzx5L2ZdcYNRgtnhA"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-20T21:19:31.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-21T21:19:31.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Active"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
 <p>Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.</p>
 
 <p>All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.</p>
@@ -89,38 +121,6 @@
 <aside class="notice">
 You must replace <code>[auth_token]</code> with your authorization token that you obtain from thr authenticate request.
 </aside>
-
-<blockquote>
-<p>To Authenticate and retreive a new authorization token, use this code:</p>
-</blockquote>
-<pre class="highlight shell"><code>curl --data <span class="s2">"email=supplier@example.com&amp;password=12345678"</span> http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
-</code></pre>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
-<span class="nb">require</span> <span class="s1">'rubygems'</span>
-<span class="nb">require</span> <span class="s1">'json'</span>
-
-<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth'</span><span class="p">)</span>
-<span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">})</span>
-<span class="n">req</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="p">{</span><span class="ss">email: </span><span class="s1">'supplier@example.com'</span><span class="p">,</span> <span class="ss">password: </span><span class="s1">'12345678'</span><span class="p">}.</span><span class="nf">to_json</span>
-<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
-<span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">resp</span><span class="p">.</span><span class="nf">code</span> <span class="o">==</span> <span class="s1">'201'</span>
-  <span class="n">token</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="nf">body</span><span class="p">)[</span><span class="s1">'token'</span><span class="p">]</span>
-<span class="k">else</span>
-  <span class="n">token</span> <span class="o">=</span> <span class="s1">''</span>
-<span class="k">end</span>
-</code></pre>
-
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NTM0MTExNzEsInV1aWQiOiJhODczNTA3Zi0yYThjLTQ2NDAtOThmYy1iZWU2MjVhYzZkZjcifQ.NbqSfsh2GdAr2cSyS0mKw9AE8wKUCgdgfubIbIsWhKNx1qm5uIxUMhfukL5Ha6jc0VuCABzx5L2ZdcYNRgtnhA"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-20T21:19:31.000Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-21T21:19:31.000Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Active"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 
           <h1 id="products">Products</h1>
 
