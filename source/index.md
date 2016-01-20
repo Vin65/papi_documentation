@@ -54,6 +54,17 @@ end
 }
 ```
 
+### HTTP Request
+
+`POST http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth`
+
+### Body Parameters
+
+Parameter | Required  | Example          | Description
+--------- | --------- | ---------------- | -----------
+email     | true      | test@example.com | Name of Product
+password  | true      | 12345678         | SKU of Product
+
 Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.
 
 All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.
