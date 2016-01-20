@@ -4,7 +4,6 @@
 ```shell
 curl --data "email=supplier@example.com&password=12345678" http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
 ```
-
 ```ruby
 require 'net/http'
 require 'rubygems'
