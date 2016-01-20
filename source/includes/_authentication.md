@@ -3,6 +3,25 @@ Vin65 Market Services uses a temporary authorization token. You your email/passw
 
 All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.
 
+
+### HTTP Request
+
+`POST http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth`
+
+### Body Parameters
+
+Parameter | Required  | Example          | Description
+--------- | --------- | ---------------- | -----------
+email     | true      | test@example.com | Name of Product
+password  | true      | 12345678         | SKU of Product
+
+`Authorization: Beaer [auth_token]`
+
+<aside class="notice">
+You must replace <code>[auth_token]</code> with your authorization token that you obtain from thr authenticate request.
+</aside>
+
+
 > To Authenticate and retreive a new authorization token, use this code:
 
 ```shell
@@ -35,20 +54,3 @@ end
 	"status": "Active"
 }
 ```
-
-### HTTP Request
-
-`POST http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth`
-
-### Body Parameters
-
-Parameter | Required  | Example          | Description
---------- | --------- | ---------------- | -----------
-email     | true      | test@example.com | Name of Product
-password  | true      | 12345678         | SKU of Product
-
-`Authorization: Beaer [auth_token]`
-
-<aside class="notice">
-You must replace <code>[auth_token]</code> with your authorization token that you obtain from thr authenticate request.
-</aside>

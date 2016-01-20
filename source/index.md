@@ -13,6 +13,7 @@ includes:
   - introduction
   - authentication
   - products
+  - orders
   - errors
 
 search: true
