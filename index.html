@@ -417,19 +417,34 @@ Remember — all requests must contain an Authorization Token in the headers.
 </tr>
 </thead><tbody>
 <tr>
+<td>200</td>
+<td>ok</td>
+<td>The request completed normally</td>
+</tr>
+<tr>
+<td>201</td>
+<td>created</td>
+<td>The resource was created</td>
+</tr>
+<tr>
+<td>204</td>
+<td>no content</td>
+<td>The request did not return any content. Normally used during a successful update</td>
+</tr>
+<tr>
 <td>401</td>
-<td>Unauthorized</td>
-<td>Your authentication credentials are incorrect or your authorization token is invalid.</td>
+<td>unauthorized</td>
+<td>Your authentication credentials are incorrect or your authorization token is invalid</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found</td>
+<td>not found</td>
 <td>The specified resource could not be found</td>
 </tr>
 <tr>
 <td>500</td>
-<td>Internal Server Error</td>
-<td>We had a problem with our server. Try again later.</td>
+<td>internal server error</td>
+<td>We had a problem with our server</td>
 </tr>
 </tbody></table>
 
