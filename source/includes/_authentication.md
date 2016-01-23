@@ -2,14 +2,14 @@
 > To Authenticate and retreive a new authorization token, use this code:
 
 ```shell
-curl --data "email=supplier@example.com&password=12345678" http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
+curl --data "email=supplier@example.com&password=12345678" http://marketservices.vin65.com/auth
 ```
 ```ruby
 require 'net/http'
 require 'rubygems'
 require 'json'
 
-uri = URI('http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth')
+uri = URI('http://marketservices.vin65.com/auth')
 req = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json'})
 req.body = {email: 'supplier@example.com', password: '12345678'}.to_json
 http = Net::HTTP.new(uri.host, 80)
@@ -56,7 +56,7 @@ All requests (other that the authenticate request) will require an Authorization
 
 ### HTTP Request
 
-`POST http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth`
+`POST http://marketservices.vin65.com/auth`
 
 ### Body Parameters
 

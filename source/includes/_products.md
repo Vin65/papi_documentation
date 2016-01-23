@@ -10,14 +10,14 @@ require 'rubygems'
 require 'json'
 
 uri = URI('http://marketservices.vin65.com/products')
-req = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => "Bearer [auth_token]"})
+req = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => "Bearer [auth_token]"})
 http = Net::HTTP.new(uri.host, 80)
 resp = http.request(req)
 products = JSON.parse(resp.body)['products']
 ```
 
 ```shell
-curl -X "GET" "http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products" \
+curl -X "GET" "http://marketservices.vin65.com/products" \
 	-H "Authorization: Bearer [auth_token]" \
 	-H "Content-Type: application/json" \
 	-d "{}"
@@ -129,15 +129,15 @@ require 'net/http'
 require 'rubygems'
 require 'json'
 
-uri = URI('http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products/1')
-req = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => "Bearer [auth_token]"})
+uri = URI('http://marketservices.vin65.com/products/1')
+req = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => "Bearer [auth_token]"})
 http = Net::HTTP.new(uri.host, 80)
 resp = http.request(req)
 product = JSON.parse(resp.body)['product']
 ```
 
 ```shell
-curl -X "GET" "http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products/1" \
+curl -X "GET" "http://marketservices.vin65.com/products/1" \
 	-H "Authorization: Bearer [auth_token]" \
 	-H "Content-Type: application/json" \
 	-d "{}"
@@ -201,6 +201,9 @@ This endpoint retrieves a specific product.
 Parameter | Required | Description
 --------- | -------- | -----------
 id        | true     | id of product
+
+### Example Request URL
+`http://marketservices.vin65.com/products/products/123`
 
 <aside class="success">
 Remember — all requests must contain an Authorization Token in the headers.

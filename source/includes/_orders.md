@@ -7,7 +7,7 @@ require 'net/http'
 require 'rubygems'
 require 'json'
 
-uri = URI('http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders')
+uri = URI('http://marketservices.vin65.com/orders')
 req = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => "Bearer [auth_token]"})
 http = Net::HTTP.new(uri.host, 80)
 resp = http.request(req)
@@ -15,7 +15,7 @@ orders = JSON.parse(resp.body)['orders']
 ```
 
 ```shell
-curl -X "GET" "http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders" \
+curl -X "GET" "http://marketservices.vin65.com/orders" \
 	-H "Authorization: Bearer [auth_token]" \
 	-H "Content-Type: application/json" \
 	-d "{}"
@@ -34,7 +34,7 @@ curl -X "GET" "http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/order
 
 ### HTTP Request
 
-`GET http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders`
+`GET http://marketservices.vin65.com/orders`
 
 ### Query Parameters
 
@@ -53,7 +53,7 @@ require 'net/http'
 require 'rubygems'
 require 'json'
 
-uri = URI('http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders/1')
+uri = URI('http://marketservices.vin65.com/orders/1')
 req = Net::HTTP::Post.new(uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => "Bearer [auth_token]"})
 http = Net::HTTP.new(uri.host, 80)
 resp = http.request(req)
@@ -62,7 +62,7 @@ order = JSON.parse(resp.body)['order']
 
 
 ```shell
-curl -X "GET" "http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders/1" \
+curl -X "GET" "http://marketservices.vin65.com/orders/1" \
 	-H "Authorization: Bearer [auth_token]" \
 	-H "Content-Type: application/json" \
 	-d "{}"
@@ -84,7 +84,7 @@ This endpoint retrieves a specific order.
 
 ### HTTP Request
 
-`GET http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders/{id}`
+`GET http://marketservices.vin65.com/orders/{id}`
 
 ### URL Parameters
 
