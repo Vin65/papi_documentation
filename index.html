@@ -59,13 +59,13 @@
 <blockquote>
 <p>To Authenticate and retreive a new authorization token, use this code:</p>
 </blockquote>
-<pre class="highlight shell"><code>curl --data <span class="s2">"email=supplier@example.com&amp;password=12345678"</span> http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth
+<pre class="highlight shell"><code>curl --data <span class="s2">"email=supplier@example.com&amp;password=12345678"</span> http://marketservices.vin65.com/auth
 </code></pre>
 <pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
-<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth'</span><span class="p">)</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://marketservices.vin65.com/auth'</span><span class="p">)</span>
 <span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">})</span>
 <span class="n">req</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="p">{</span><span class="ss">email: </span><span class="s1">'supplier@example.com'</span><span class="p">,</span> <span class="ss">password: </span><span class="s1">'12345678'</span><span class="p">}.</span><span class="nf">to_json</span>
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
@@ -112,7 +112,7 @@ Connection: Close
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth</code></p>
+<p><code class="prettyprint">POST http://marketservices.vin65.com/auth</code></p>
 
 <h3 id="body-parameters">Body Parameters</h3>
 
@@ -186,12 +186,12 @@ Connection: Close
 <span class="nb">require</span> <span class="s1">'json'</span>
 
 <span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://marketservices.vin65.com/products'</span><span class="p">)</span>
-<span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
+<span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 <span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 <span class="n">products</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="nf">body</span><span class="p">)[</span><span class="s1">'products'</span><span class="p">]</span>
 </code></pre>
-<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://marketservices.vin65.com/products"</span> <span class="se">\</span>
     -H <span class="s2">"Authorization: Bearer [auth_token]"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s2">"{}"</span>
@@ -339,13 +339,13 @@ Remember — all requests must contain an Authorization Token in the headers.
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
-<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products/1'</span><span class="p">)</span>
-<span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://marketservices.vin65.com/products/1'</span><span class="p">)</span>
+<span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 <span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 <span class="n">product</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="nf">body</span><span class="p">)[</span><span class="s1">'product'</span><span class="p">]</span>
 </code></pre>
-<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products/1"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://marketservices.vin65.com/products/1"</span> <span class="se">\</span>
     -H <span class="s2">"Authorization: Bearer [auth_token]"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s2">"{}"</span>
@@ -420,6 +420,10 @@ Remember — all requests must contain an Authorization Token in the headers.
 </tr>
 </tbody></table>
 
+<h3 id="example-request-url">Example Request URL</h3>
+
+<p><code class="prettyprint">http://marketservices.vin65.com/products/products/123</code></p>
+
 <aside class="success">
 Remember — all requests must contain an Authorization Token in the headers.
 </aside>
@@ -431,13 +435,13 @@ Remember — all requests must contain an Authorization Token in the headers.
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
-<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders'</span><span class="p">)</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://marketservices.vin65.com/orders'</span><span class="p">)</span>
 <span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 <span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 <span class="n">orders</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="nf">body</span><span class="p">)[</span><span class="s1">'orders'</span><span class="p">]</span>
 </code></pre>
-<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://marketservices.vin65.com/orders"</span> <span class="se">\</span>
     -H <span class="s2">"Authorization: Bearer [auth_token]"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s2">"{}"</span>
@@ -456,7 +460,7 @@ Remember — all requests must contain an Authorization Token in the headers.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders</code></p>
+<p><code class="prettyprint">GET http://marketservices.vin65.com/orders</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -481,13 +485,13 @@ Remember — all requests must contain an Authorization Token in the headers.
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
-<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders/1'</span><span class="p">)</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://marketservices.vin65.com/orders/1'</span><span class="p">)</span>
 <span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 <span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
 <span class="n">order</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="nf">body</span><span class="p">)[</span><span class="s1">'order'</span><span class="p">]</span>
 </code></pre>
-<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders/1"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl -X <span class="s2">"GET"</span> <span class="s2">"http://marketservices.vin65.com/orders/1"</span> <span class="se">\</span>
     -H <span class="s2">"Authorization: Bearer [auth_token]"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s2">"{}"</span>
@@ -509,7 +513,7 @@ Remember — all requests must contain an Authorization Token in the headers.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/orders/{id}</code></p>
+<p><code class="prettyprint">GET http://marketservices.vin65.com/orders/{id}</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
