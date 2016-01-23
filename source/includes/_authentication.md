@@ -48,6 +48,11 @@ Connection: Close
   "expires_at": "2016-01-24T19:43:28.000Z",
   "status": "Active"
 }
+```
+
+Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.
+
+All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.
 
 ### HTTP Request
 
@@ -60,10 +65,8 @@ Parameter | Required  | Description
 email     | true      | Email address of API client
 password  | true      | Password address of API client
 
-
 ### Example Request Body
 `{ email: 'test@example.com', password: '12345678' }</pre>`
-`
 
 ### Errors
 Code | Message               | Description
@@ -73,34 +76,7 @@ Code | Message               | Description
 429  | Too Many Requests     | Too many requests from this IP. Please wait and try again later
 500  | Internal Server Error | Internal Server Error
 
-> The above command returns JSON structured like this:
 
-```json
-{
-	"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NTM0MTExNzEsInV1aWQiOiJhODczNTA3Zi0yYThjLTQ2NDAtOThmYy1iZWU2MjVhYzZkZjcifQ.NbqSfsh2GdAr2cSyS0mKw9AE8wKUCgdgfubIbIsWhKNx1qm5uIxUMhfukL5Ha6jc0VuCABzx5L2ZdcYNRgtnhA",
-	"created_at": "2016-01-20T21:19:31.000Z",
-	"expires_at": "2016-01-21T21:19:31.000Z",
-	"status": "Active"
-}
-```
 Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.
 
 All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.
-
-
-### HTTP Request
-
-`POST http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/auth`
-
-### Body Parameters
-
-Parameter | Required  | Example          | Description
---------- | --------- | ---------------- | -----------
-email     | true      | test@example.com | Name of Product
-password  | true      | 12345678         | SKU of Product
-
-`Authorization: Beaer [auth_token]`
-
-<aside class="notice">
-You must replace <code>[auth_token]</code> with your authorization token that you obtain from thr authenticate request.
-</aside>
