@@ -78,13 +78,31 @@
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>HTTP/1.1 201 Created
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json; charset=utf-8
+Date: Sat, 23 Jan 2016 19:43:28 GMT
+ETag: W/"58faa33683c8bcf0322b9fe35476fcba"
+Server: nginx/1.4.6 (Ubuntu)
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Request-Id: 98413c49-84be-475c-a89e-0adba7b805a1
+X-Runtime: 0.122787
+X-XSS-Protection: 1; mode=block
+Content-Length: 336
+Connection: Close
+</code></pre>
+
+<blockquote>
+<p>Example Response Body</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NTM0MTExNzEsInV1aWQiOiJhODczNTA3Zi0yYThjLTQ2NDAtOThmYy1iZWU2MjVhYzZkZjcifQ.NbqSfsh2GdAr2cSyS0mKw9AE8wKUCgdgfubIbIsWhKNx1qm5uIxUMhfukL5Ha6jc0VuCABzx5L2ZdcYNRgtnhA"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-20T21:19:31.000Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-21T21:19:31.000Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Active"</span><span class="w">
+  </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE0NTM2NjQ2MDgsInV1aWQiOiJiMTUwMThkZi0zNDkzLTQ3YjQtODg3Yi1jNDYzZDc5NjhiOTEifQ.EdpkOXvNmCn_bD73FRtuPpLH0OieW7aUKMgjg3prXG4N3xoemaD2IrRw7GMYRb7QOuzD6Y-vbtZQ26Sz-gJnQQ"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-23T19:43:28.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-24T19:43:28.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Active"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -102,38 +120,72 @@
 <tr>
 <th>Parameter</th>
 <th>Required</th>
-<th>Example</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>email</td>
 <td>true</td>
-<td>test@example.com</td>
-<td>Name of Product</td>
+<td>Email address of API client</td>
 </tr>
 <tr>
 <td>password</td>
 <td>true</td>
-<td>12345678</td>
-<td>SKU of Product</td>
+<td>Password address of API client</td>
 </tr>
 </tbody></table>
 
-<p><code class="prettyprint">Authorization: Beaer [auth_token]</code></p>
+<h3 id="example-request-body">Example Request Body</h3>
 
-<aside class="notice">
-You must replace <code>[auth_token]</code> with your authorization token that you obtain from thr authenticate request.
-</aside>
+<p><code class="prettyprint">{ email: &#39;test@example.com&#39;, password: &#39;12345678&#39; }&lt;/pre&gt;</code></p>
+
+<h3 id="errors">Errors</h3>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Authentication failed</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>Not Found</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests</td>
+<td>Too many requests from this IP. Please wait and try again later</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>Internal Server Error</td>
+</tr>
+</tbody></table>
+
+<p>Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.</p>
+
+<p>All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.</p>
 
           <h1 id="products">Products</h1>
 
 <h2 id="get-a-list-products">Get a list Products</h2>
+
+<blockquote>
+<p>To get a list of products, use this code:</p>
+</blockquote>
 <pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
 
-<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products'</span><span class="p">)</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s1">'http://marketservices.vin65.com/products'</span><span class="p">)</span>
 <span class="n">req</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">initheader</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span><span class="s1">'application/json'</span><span class="p">,</span> <span class="s1">'Authorization'</span> <span class="o">=&gt;</span> <span class="s2">"Bearer [auth_token]"</span><span class="p">})</span>
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 <span class="n">resp</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
@@ -146,7 +198,25 @@ You must replace <code>[auth_token]</code> with your authorization token that yo
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>HTTP/1.1 200 OK
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json; charset=utf-8
+Date: Sat, 23 Jan 2016 20:30:18 GMT
+ETag: W/"f2f61edcecf302459979f9deb67b38e4"
+Server: nginx/1.4.6 (Ubuntu)
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Request-Id: f7e972a7-9966-4e1f-85b7-e9e2beb3522c
+X-Runtime: 0.094200
+X-XSS-Protection: 1; mode=block
+transfer-encoding: chunked
+Connection: Close
+</code></pre>
+
+<blockquote>
+<p>Example Response Body</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
@@ -192,24 +262,31 @@ You must replace <code>[auth_token]</code> with your authorization token that yo
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
+<p>Vin65 Market Services uses a temporary authorization token. You your email/password credentials to Authenticate yourself and obtain a new authorization token and then you can optionally cache the token until it expires.</p>
+
+<p>All requests (other that the authenticate request) will require an Authorization header that uses an active Authorization token.</p>
+
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products</code></p>
+<p><code class="prettyprint">GET http://marketservices.vin65.com/products/products</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>name</td>
+<td>false</td>
 <td>Name of Product</td>
 </tr>
 <tr>
 <td>sku</td>
+<td>false</td>
 <td>SKU of Product</td>
 </tr>
 </tbody></table>
@@ -218,7 +295,46 @@ You must replace <code>[auth_token]</code> with your authorization token that yo
 Remember — all requests must contain an Authorization Token in the headers.
 </aside>
 
+<h3 id="example-request-url">Example Request URL</h3>
+
+<p><code class="prettyprint">http://marketservices.vin65.com/products/products?sku=ABC123</code></p>
+
+<h3 id="errors">Errors</h3>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Authentication failed</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>Not Found</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests</td>
+<td>Too many requests from this IP. Please wait and try again later</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>Internal Server Error</td>
+</tr>
+</tbody></table>
+
 <h2 id="get-a-specific-product">Get a Specific Product</h2>
+
+<blockquote>
+<p>To get a specific product, use this code:</p>
+</blockquote>
 <pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'net/http'</span>
 <span class="nb">require</span> <span class="s1">'rubygems'</span>
 <span class="nb">require</span> <span class="s1">'json'</span>
@@ -236,7 +352,7 @@ Remember — all requests must contain an Authorization Token in the headers.
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response Body</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -286,21 +402,27 @@ Remember — all requests must contain an Authorization Token in the headers.
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://vin65-plb-papi-298085473.us-west-2.elb.amazonaws.com/products/{id}</code></p>
+<p><code class="prettyprint">GET http://marketservices.vin65.com/products/{id}</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the product to retrieve</td>
+<td>id</td>
+<td>true</td>
+<td>id of product</td>
 </tr>
 </tbody></table>
+
+<aside class="success">
+Remember — all requests must contain an Authorization Token in the headers.
+</aside>
 
           <h1 id="orders">Orders</h1>
 
